@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace BankApp.Models
@@ -10,7 +11,9 @@ namespace BankApp.Models
         public string type { get; set; }
         public int balance { get; set; }
         public string coustomerId { get; set; }
-        public List<Transaction> transactions { get; set; }
+        public List<Transaction> transactions = new List<Transaction>();
+
+
 
     }
 }

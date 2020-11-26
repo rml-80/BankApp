@@ -12,6 +12,8 @@ namespace BankApp
         private user u = new user();
         private SalaryAccount a = new SalaryAccount();
         string temp;
+        ListView LV1 = new ListView();
+        bool isPop = false;
         public accountForm(string userName)
         {
             InitializeComponent();
@@ -58,6 +60,10 @@ namespace BankApp
         public void listView2_SelectedIndexChanged(string userName)
         {
             updateList(userName);
+            foreach (var item in a.transactions)
+            {
+                Console.WriteLine(item);
+            }
         }
         private void noAccounts()
         {
@@ -72,12 +78,15 @@ namespace BankApp
             if (a.cardNumber == string.Empty)
             {
                 lblTxtCvv.Text = string.Empty;
-            } else
+            }
+            else
             {
                 lblTxtCvv.Text = a.cvv;
 
             }
             lblTxtCredit.Text = a.maxCredit.ToString();
+            populateTransactions();
+
         }
         private void lbAccountList_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -86,6 +95,7 @@ namespace BankApp
             var user = u.email;
             a.populateAccountInfo(user, temp);
             temp = a.accountNumber;
+            LV1.Items.Clear();
             updateInfo();
         }
         public void updateList(string userName)
@@ -121,6 +131,39 @@ namespace BankApp
         {
             lbAccountList.Items.Clear();
             updateList(u.email);
+
+        }
+        public void populateTransactions()
+        {
+            
+
+            if (isPop == false)
+            {
+
+
+            LV1.Bounds = new System.Drawing.Rectangle(new System.Drawing.Point(241, 174), new System.Drawing.Size(550, 230));
+
+            LV1.View = View.Details;
+
+            LV1.Columns.Add("Date", -2, HorizontalAlignment.Left);
+            LV1.Columns.Add("Type", 80, HorizontalAlignment.Left);
+            LV1.Columns.Add("Note", 2120, HorizontalAlignment.Left);
+            LV1.Columns.Add("Amount", -2, HorizontalAlignment.Left);
+
+                isPop = true;
+            }
+
+
+            foreach (var item in a.transactions)
+            {
+                ListViewItem item1 = new ListViewItem(item.date.ToString());
+                item1.SubItems.Add(item.type.ToString());
+                item1.SubItems.Add(item.note.ToString());
+                item1.SubItems.Add(item.amount.ToString());
+                LV1.Items.Add(item1);
+            }
+
+            this.Controls.Add(LV1);
         }
     }
 }

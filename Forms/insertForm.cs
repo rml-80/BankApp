@@ -9,6 +9,7 @@ namespace BankApp.Forms
     public partial class insertForm : Form
     {
         public SalaryAccount a = new SalaryAccount();
+        public Transaction t = new Transaction();
         public string userName;
         string temp;
         string toAccount;
@@ -82,14 +83,16 @@ namespace BankApp.Forms
         {
             makeInsert(toAccount);
             a.balance += amount;
-            writeToFile();
+            //functionTest.writeToFileInsertTest(a.coustomerId, a.accountNumber);
+            writeToFileInsert();
+            writeInsertTransaction();
             this.Close();
         }
         void getAccountInfo()
         {
             a.populateAccountInfo(userName, toAccount);       
         }
-        private void writeToFile()
+        private void writeToFileInsert()
         {
             TextWriter sw = new StreamWriter($"D:\\OneDrive\\school\\10. programmering avancerad - objektorienterad\\coding\\BankApp\\Data\\{a.coustomerId}\\accounts\\{a.accountNumber}.txt");
             sw.WriteLine($"{a.accountNumber}");
@@ -102,16 +105,58 @@ namespace BankApp.Forms
             sw.WriteLine($"{a.coustomerId}");
             sw.Close();
         }
-        private void saveTransaction()
+        private void writeInsertTransaction()
         {
-            TextWriter sw = new StreamWriter($"D:\\OneDrive\\school\\10. programmering avancerad - objektorienterad\\coding\\BankApp\\Data\\{a.coustomerId}\\accounts\\trans_{a.accountNumber}.txt");
+            t.date = DateTime.UtcNow;
+            t.type = "Insert";
+            t.fromAccount = "Insert"; //TODO: Make a field for this
+            t.toAccount = string.Empty;
+            t.amount = amount;
+            t.accountNumber = a.accountNumber;
+            saveInsertTransaction();
+            var tr = new Transaction {
+                date = t.date,
+                accountNumber = t.accountNumber,
+                amount = t.amount,
+                fromAccount = t.fromAccount,
+                //id = t.id,
+                note = t.note,
+                toAccount = t.toAccount,
+                type = t.type
+            };
+            a.transactions.Add(tr);
+        }
 
-            sw.WriteLine($"Datum:");
-            sw.WriteLine($"TransTyp:");
-            sw.WriteLine($"Note:");
-            sw.WriteLine($"Amount:");
-            sw.WriteLine($"?Amount after?:"); //Maybe
+        private void saveInsertTransaction()
+        {
+            if (Directory.Exists($"D:\\OneDrive\\school\\10. programmering avancerad - objektorienterad\\coding\\BankApp\\Data\\{a.coustomerId}\\accounts\\transactions"))
+            {
+                TextWriter sw = File.AppendText($"D:\\OneDrive\\school\\10. programmering avancerad - objektorienterad\\coding\\BankApp\\Data\\{a.coustomerId}\\accounts\\transactions\\{a.accountNumber}.txt");
 
+                sw.Write($"{t.accountNumber};");
+                sw.Write($"{t.date};");
+                sw.Write($"{t.type};");
+                sw.Write($"{t.fromAccount};");
+                sw.Write($"{t.toAccount};");
+                sw.Write($"{t.note};");
+                sw.Write($"{t.amount}\n");
+                //sw.WriteLine($"?Amount after?:"); //Maybe
+                sw.Close();
+            } else {
+                Directory.CreateDirectory($"D:\\OneDrive\\school\\10. programmering avancerad - objektorienterad\\coding\\BankApp\\Data\\{a.coustomerId}\\accounts\\transactions");
+
+                TextWriter sw = File.AppendText($"D:\\OneDrive\\school\\10. programmering avancerad - objektorienterad\\coding\\BankApp\\Data\\{a.coustomerId}\\accounts\\transactions\\{a.accountNumber}.txt");
+
+                sw.Write($"{t.accountNumber};");
+                sw.Write($"{t.date};");
+                sw.Write($"{t.type};");
+                sw.Write($"{t.fromAccount};");
+                sw.Write($"{t.toAccount};");
+                sw.Write($"{t.note};");
+                sw.Write($"{t.amount}\n");
+                //sw.WriteLine($"?Amount after?:"); //Maybe
+                sw.Close();
+            }
         }
     }
 }

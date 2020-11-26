@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace BankApp.Models
@@ -24,6 +25,37 @@ namespace BankApp.Models
             credit = Convert.ToBoolean(details[5]);
             maxCredit = Convert.ToInt32(details[6]);
             coustomerId = details[7];
+            populateTransactionList();
+        }
+        public void populateTransactionList()
+        {
+            var folderPath = $"D:\\OneDrive\\school\\10. programmering avancerad - objektorienterad\\coding\\BankApp\\Data\\{coustomerId}\\accounts\\transactions";
+            if (Directory.Exists(folderPath))
+            {
+                transactions.Clear();
+                List<string> trans = new List<string>();
+                StreamReader sw = new StreamReader(folderPath + $"\\{accountNumber}.txt");
+                string line;
+                while ((line = sw.ReadLine()) != null)
+                {
+                    trans.Clear();
+                    foreach (var item in line.Split(";"))
+                    {
+                        trans.Add(item);
+                    }
+                    Transaction t = new Transaction();
+                    t.accountNumber = trans[0];
+                    t.date = Convert.ToDateTime(trans[1]);
+                    t.type = trans[2];
+                    t.fromAccount = trans[3];
+                    t.toAccount = trans[4];
+                    t.note = trans[5];
+                    t.amount = Convert.ToInt32(trans[6]);
+
+                    transactions.Add(t);
+                }
+                sw.Close();
+            }
         }
     }
 }

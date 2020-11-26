@@ -36,7 +36,6 @@ namespace BankApp
             this.btnCreateAccount = new System.Windows.Forms.Button();
             this.btnTransfer = new System.Windows.Forms.Button();
             this.lblLogOut = new System.Windows.Forms.Label();
-            this.listView1 = new System.Windows.Forms.ListView();
             this.lbAccountList = new System.Windows.Forms.ListBox();
             this.lblAccounts = new System.Windows.Forms.Label();
             this.lblTransactions = new System.Windows.Forms.Label();
@@ -121,15 +120,6 @@ namespace BankApp
             this.lblLogOut.TabIndex = 9;
             this.lblLogOut.Text = "Log Out";
             this.lblLogOut.Click += new System.EventHandler(this.lblLogOut_Click);
-            // 
-            // listView1
-            // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(241, 167);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(547, 225);
-            this.listView1.TabIndex = 6;
-            this.listView1.UseCompatibleStateImageBehavior = false;
             // 
             // lbAccountList
             // 
@@ -290,7 +280,6 @@ namespace BankApp
             this.Controls.Add(this.lblLogOut);
             this.Controls.Add(this.btnTransfer);
             this.Controls.Add(this.btnCreateAccount);
-            this.Controls.Add(this.listView1);
             this.Controls.Add(this.insert);
             this.Controls.Add(this.btnWithdraw);
             this.Controls.Add(this.lblBalance);
@@ -311,7 +300,6 @@ namespace BankApp
         private System.Windows.Forms.Button btnCreateAccount;
         private System.Windows.Forms.Button btnTransfer;
         private System.Windows.Forms.Label lblLogOut;
-        private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ListBox lbAccountList;
         private System.Windows.Forms.Label lblAccounts;
         private System.Windows.Forms.Label lblTransactions;
@@ -326,5 +314,6 @@ namespace BankApp
         private System.Windows.Forms.Label lblTxtCardNumber;
         private System.Windows.Forms.Label lblTxtCvv;
         private System.Windows.Forms.Label lblTxtCredit;
+        private System.Windows.Forms.ListBox lvTransactions;
     }
 }
