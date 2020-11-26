@@ -1,18 +1,13 @@
 ﻿using BankApp.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 
 namespace BankApp.Forms
 {
     public partial class newAccountForm : Form
     {
-        account a = new account();
+        readonly SalaryAccount a = new SalaryAccount();
         public newAccountForm(string userName)
         {
             InitializeComponent();
@@ -22,7 +17,7 @@ namespace BankApp.Forms
         }
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
         }
 
         private void btnNewAccountCreate_Click_1(object sender, EventArgs e)
@@ -42,14 +37,16 @@ namespace BankApp.Forms
                 else
                 {
                     a.cardNumber = generateCardNumber();
+                    a.cvv = generateCvv();
                 }
                 if ((bool)rbNewAccountCreditNo.Checked)
                 {
-                    a.credit = string.Empty;
-                } else
+                    a.credit = false;
+                }
+                else
                 {
-                    a.credit = "true";
-                    a.maxCredit = "1500";
+                    a.credit = true;
+                    a.maxCredit = 1500;
                 }
 
                 a.accountNumber = generateAccountNumber();
@@ -74,6 +71,7 @@ namespace BankApp.Forms
             sw.WriteLine($"{cbNewAccountType.Text}");
             sw.WriteLine($"{a.balance}");
             sw.WriteLine($"{a.cardNumber}");
+            sw.WriteLine($"{a.cvv}");
             sw.WriteLine($"{a.credit}");
             sw.WriteLine($"{a.maxCredit}");
             sw.WriteLine($"{a.coustomerId}");
@@ -106,10 +104,15 @@ namespace BankApp.Forms
                 string tempCardNumber = a.ToString() + b.ToString() + c.ToString() + d.ToString() + " ";
                 cardNumber += tempCardNumber;
             }
-            var cvv = r.Next(100, 999).ToString();
-            cardNumber += $"/{cvv}";
 
             return cardNumber;
         }
+        private string generateCvv()
+        {
+            Random r = new Random();
+            var cvv = r.Next(100, 999).ToString();
+            return cvv;
+        }
+
     }
 }

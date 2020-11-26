@@ -9,8 +9,8 @@ namespace BankApp
 {
     public partial class accountForm : Form
     {
-        user u = new user();
-        account a = new account();
+        private user u = new user();
+        private SalaryAccount a = new SalaryAccount();
         string temp;
         public accountForm(string userName)
         {
@@ -18,6 +18,7 @@ namespace BankApp
             u.PopulateUser(userName);
             changeName();
             listView2_SelectedIndexChanged(userName);
+            lbAccountList.SelectedIndex = 0;
         }
         private void changeName()
         {
@@ -30,8 +31,11 @@ namespace BankApp
         }
         private void insert_Click(object sender, EventArgs e)
         {
-            insertForm f = new insertForm();
-            f.Show();
+            insertForm f = new insertForm(u.email.ToString());
+            f.ShowDialog();
+            updateInfo();
+            refreshList();
+            lbAccountList.SelectedIndex = 0;
         }
         private void btnTransfer_Click(object sender, EventArgs e)
         {
@@ -61,7 +65,7 @@ namespace BankApp
         }
         public void updateInfo()
         {
-            lblTxtBalance.Text = a.balance;
+            lblTxtBalance.Text = a.balance.ToString();
             lblTxtAccountType.Text = a.type;
             lblTxtAccountNumber.Text = a.accountNumber;
             lblTxtCardNumber.Text = a.cardNumber;
@@ -73,7 +77,7 @@ namespace BankApp
                 lblTxtCvv.Text = a.cvv;
 
             }
-            lblTxtCredit.Text = a.maxCredit;
+            lblTxtCredit.Text = a.maxCredit.ToString();
         }
         private void lbAccountList_SelectedIndexChanged(object sender, EventArgs e)
         {

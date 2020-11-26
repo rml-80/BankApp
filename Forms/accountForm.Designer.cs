@@ -83,7 +83,7 @@ namespace BankApp
             // 
             // insert
             // 
-            this.insert.Location = new System.Drawing.Point(161, 414);
+            this.insert.Location = new System.Drawing.Point(305, 414);
             this.insert.Name = "insert";
             this.insert.Size = new System.Drawing.Size(140, 25);
             this.insert.TabIndex = 3;
@@ -103,7 +103,7 @@ namespace BankApp
             // 
             // btnTransfer
             // 
-            this.btnTransfer.Location = new System.Drawing.Point(307, 414);
+            this.btnTransfer.Location = new System.Drawing.Point(159, 414);
             this.btnTransfer.Name = "btnTransfer";
             this.btnTransfer.Size = new System.Drawing.Size(140, 25);
             this.btnTransfer.TabIndex = 8;
